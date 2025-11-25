@@ -68,8 +68,8 @@ const About: React.FC = () => (
     <div className="max-w-4xl mx-auto px-4">
       <h1 className="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">Our Lineage & Vision</h1>
       <div className="prose prose-lg prose-stone mx-auto">
-        <p>Founded in Rishikesh, the Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) stands as a beacon of authentic knowledge. We do not view Yoga merely as an exercise, but as a complete medical and spiritual science.</p>
-        <p>Our founder, <strong>Dr. Aryan Vashishth</strong>, spent 20 years in the Himalayas before earning his PhD in Neurobiology. This unique blend of classical wisdom and modern science forms the bedrock of our curriculum.</p>
+        <p>Founded in Bengaluru, the Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) stands as a beacon of authentic knowledge. We do not view Yoga merely as an exercise, but as a complete medical and spiritual science.</p>
+        <p>Our founder, <strong>Gopinath Acharya</strong>, spent 6 years in (Prashanthi Kuteeram) SVYASA earning his Post graduate Diploma in Yoga Therapy. Having spent time in the Himalayas, other Ashrams and Yoga centres throughout India exporing various aspects of Yoga during the 90s, he then ventured across globe conducting yoga worshops and seminars in Europe, Africa, Australia and America. After realizing the impact of stress on the planet, he uses the yoga toolkit which is purely designed to eliviate negative effects of stress to promote health, happiness, peace at an individual level if practiced right. With this missoion, Yoganjali was founded in 20002. Since then various yoga activities have been conductedto suit the needs of humanity at large. This unique blend of classical wisdom and modern science forms the bedrock of a timetested science of Yoga.</p>
         <h3 className="text-2xl font-serif font-bold mt-8 mb-4">Our Mission</h3>
         <ul className="list-disc pl-6 space-y-2">
            <li>To scientifically validate yogic therapies.</li>
