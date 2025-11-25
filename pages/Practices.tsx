@@ -40,7 +40,7 @@ export const Practices: React.FC = () => {
             />
           </div>
           <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-            {['All', 'Traditional', 'Applied', 'Therapeutic'].map(cat => (
+            {['All', 'Asana', 'Pranayama', 'Bandhas & Mudras', 'Dhyana', 'Kriya','Chikitsa', 'Vishranti'].map(cat => (
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}

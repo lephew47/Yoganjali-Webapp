@@ -73,9 +73,9 @@ const fetchAnalysis = async (name: string) => {
           <div className="inline-flex items-center justify-center p-3 bg-teal-100 rounded-full text-teal-800 mb-4">
             <Microscope size={32} />
           </div>
-          <h1 className="text-4xl font-serif font-bold text-stone-800 mb-4">Asana Science Lab</h1>
+          <h1 className="text-4xl font-serif font-bold text-stone-800 mb-4">Yoga Science Lab</h1>
           <p className="text-stone-600 max-w-2xl mx-auto">
-            Enter any yoga posture or practice to generate a real-time biomechanical and physiological analysis using AI.
+            Consult our live Yoga Guruji for the answers you need.
           </p>
         </div>
 

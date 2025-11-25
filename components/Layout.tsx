@@ -45,7 +45,7 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
                 <Microscope size={16} />
                 <span>Science Lab</span>
               </Link>
-              <Link to="/blog" className={isActive('/blog')}>Journal</Link>
+              <Link to="/blog" className={isActive('/blog')}>Yogic Events</Link>
               {isAuthenticated ? (
                 <Link to="/dashboard" className="flex items-center space-x-1 text-amber-700 bg-amber-50 px-4 py-2 rounded-full hover:bg-amber-100 transition">
                   <User size={18} />
@@ -75,7 +75,7 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
               <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link to="/practices" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Practices Library</Link>
               <Link to="/programs" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Courses & Programs</Link>
-              <Link to="/asana-lab" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Asana Science Lab</Link>
+              <Link to="/asana-lab" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Yoga Science Lab</Link>
               <Link to="/auth" className="block px-3 py-2 rounded-md text-base font-medium text-amber-700 bg-amber-50 mt-2" onClick={() => setIsMenuOpen(false)}>Student Portal</Link>
             </div>
           </div>

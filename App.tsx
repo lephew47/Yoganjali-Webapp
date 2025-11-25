@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { AITherapy } from './pages/AITherapy';
+import {Blog} from './pages/Blog';
 import { Practices } from './pages/Practices';
 import { AsanaLab } from './pages/AsanaLab';
 import { Enrollment } from './pages/Enrollment';
@@ -68,8 +69,10 @@ const About: React.FC = () => (
     <div className="max-w-4xl mx-auto px-4">
       <h1 className="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">Our Lineage & Vision</h1>
       <div className="prose prose-lg prose-stone mx-auto">
-        <p>Founded in Bengaluru, the Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) stands as a beacon of authentic knowledge. We do not view Yoga merely as an exercise, but as a complete medical and spiritual science.</p>
-        <p>Our founder, <strong>Gopinath Acharya</strong>, spent 6 years in (Prashanthi Kuteeram) SVYASA earning his Post graduate Diploma in Yoga Therapy. Having spent time in the Himalayas, other Ashrams and Yoga centres throughout India exporing various aspects of Yoga during the 90s, he then ventured across globe conducting yoga worshops and seminars in Europe, Africa, Australia and America. After realizing the impact of stress on the planet, he uses the yoga toolkit which is purely designed to eliviate negative effects of stress to promote health, happiness, peace at an individual level if practiced right. With this missoion, Yoganjali was founded in 20002. Since then various yoga activities have been conductedto suit the needs of humanity at large. This unique blend of classical wisdom and modern science forms the bedrock of a timetested science of Yoga.</p>
+        <p>Welcome to Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) – a sanctuary where Yoga is honored not just as exercise, but as a complete science for the body, mind, and soul. </p>
+        <p>Founded in Bengaluru by <strong>Gopinath Acharya</strong>, Yoganjali embodies the perfect blend of classical wisdom and modern understanding. Gopinath Acharya devoted six years to earn his Postgraduate Diploma in Yoga Therapy at Prashanthi Kuteeram, SVYASA, and further deepened his practice through immersive experiences in the Himalayas and renowned yoga centers across India in the 1990s. He shared his knowledge globally, leading workshops and seminars across Asia, Africa, Australia, America and Europe. Observing the widespread effects of stress, he developed a holistic yoga toolkit designed to restore balance, cultivate health, and nurture inner peace.
+<p></p>With this vision, Yoganjali was founded in 2002. Since then, we have conducted a wide range of yoga programs, tailored to meet the evolving needs of humanity. This unique synthesis of classical wisdom and modern scientific understanding forms the foundation of a time-tested, practical, and transformative science of Yoga.
+</p>
         <h3 className="text-2xl font-serif font-bold mt-8 mb-4">Our Mission</h3>
         <ul className="list-disc pl-6 space-y-2">
            <li>To scientifically validate yogic therapies.</li>
@@ -221,24 +224,6 @@ const Auth: React.FC<{ onLogin: (user: UserType) => void }> = ({ onLogin }) => {
   );
 };
 
-const Blog: React.FC = () => (
-    <div className="py-20 max-w-7xl mx-auto px-4">
-        <h1 className="text-4xl font-serif font-bold mb-12 text-center">Yogic Wisdom Journal</h1>
-        <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => (
-                <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden">
-                    <img src={`https://picsum.photos/seed/blog${i}/400/250`} className="w-full h-48 object-cover" alt="Blog" />
-                    <div className="p-6">
-                            <span className="text-amber-600 text-xs font-bold uppercase">Mindfulness</span>
-                        <h3 className="text-xl font-bold mt-2 mb-2">Understanding the 5 Kleshas</h3>
-                        <p className="text-stone-500 text-sm">Why do we suffer? Patanjali's Yoga Sutras explain the root causes of mental pain...</p>
-                        <button className="mt-4 text-stone-900 font-bold text-sm hover:text-amber-600">Read Article &rarr;</button>
-                    </div>
-                </div>
-            ))}
-        </div>
-    </div>
-  );
 
 // --- Main App Component ---
 
@@ -352,6 +337,7 @@ export const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth onLogin={handleLogin} />} />
           <Route path="/about" element={<About />} />
+          <Route path="/about" element={<Blog />} />
           <Route path="/practices" element={<Practices />} />
           <Route path="/asana-lab" element={<AsanaLab />} />
           <Route path="/programs" element={<Programs />} />

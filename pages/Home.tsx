@@ -84,7 +84,7 @@ export const Home: React.FC = () => {
                 <Sparkles size={16} />
                 <span className="text-sm font-bold uppercase">New Feature</span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">Meet Your Personal <br/>AI Yoga Therapist</h2>
+              <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">Meet Your Personal <br/>Yoga Therapist</h2>
               <p className="text-lg text-stone-300 mb-8">
                 Powered by advanced Gemini technology, our AI assistant provides personalized routine suggestions, pain management advice, and mental wellness check-ins 24/7.
               </p>

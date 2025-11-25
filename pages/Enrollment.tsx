@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { COURSES } from '../data/content';
+import {BLOG} from '../data/content';
 import { authService } from '../services/authService';
 import { CheckCircle, AlertTriangle, Loader2, ArrowLeft, ShieldCheck } from 'lucide-react';
 
@@ -11,7 +12,8 @@ export const Enrollment: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
-  const course = COURSES.find(c => c.id === courseId);
+  const course = COURSES.find(c => c.id === courseId) || BLOG.find(e => e.id === courseId);
+
 
   // Form State
   const [formData, setFormData] = useState({
@@ -123,7 +125,7 @@ export const Enrollment: React.FC = () => {
                 <p className="text-stone-500 text-sm mb-4">{course.category} • {course.level}</p>
                 <div className="flex justify-between items-center border-t border-stone-100 pt-4">
                   <span className="text-stone-500 text-sm">Tuition</span>
-                  <span className="text-amber-700 font-bold text-xl">${course.price}</span>
+                
                 </div>
               </div>
               <div className="bg-amber-50 p-4 text-xs text-amber-800 border-t border-amber-100">
