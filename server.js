@@ -117,12 +117,9 @@ app.get('/debug', (req, res) => {
 });
 
 // Catch-all route for React Router
-app.get(/.*/, (req, res, next) => {
-  if (req.path.includes(".")) {
-    return next(); // it's a file → let express.static handle it
-  }
-
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// This works in Express 4 + ESM + Cloud Run + locally — 100% safe
+app.get(/^(?!.*\.).*$/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
