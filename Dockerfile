@@ -19,7 +19,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Copy built frontend, server, and service files
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist /app/dist
 COPY server.js ./
 COPY services/ ./services/
 

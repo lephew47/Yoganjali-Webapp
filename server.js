@@ -11,9 +11,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json());
+
 const frontendPath = path.join(__dirname, 'dist');
 console.log("Serving frontend from:", frontendPath);
+
 app.use(express.static(frontendPath));
+
 
 
 // Add debugging middleware
@@ -118,8 +121,8 @@ app.get('/debug', (req, res) => {
 
 // Catch-all route for React Router
 // This works in Express 4 + ESM + Cloud Run + locally — 100% safe
-app.get(/^(?!.*\.).*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 app.listen(PORT, () => {
