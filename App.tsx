@@ -65,23 +65,62 @@ const Programs: React.FC = () => {
 };
 
 const About: React.FC = () => (
-  <div className="bg-white py-20">
-    <div className="max-w-4xl mx-auto px-4">
-      <h1 className="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">Our Lineage & Vision</h1>
-      <div className="prose prose-lg prose-stone mx-auto">
-        <p>Welcome to Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) – a sanctuary where Yoga is honored not just as exercise, but as a complete science for the body, mind, and soul. </p>
-        <p>Founded in Bengaluru by <strong>Gopinath Acharya</strong>, Yoganjali embodies the perfect blend of classical wisdom and modern understanding. Gopinath Acharya devoted six years to earn his Postgraduate Diploma in Yoga Therapy at Prashanthi Kuteeram, SVYASA, and further deepened his practice through immersive experiences in the Himalayas and renowned yoga centers across India in the 1990s. He shared his knowledge globally, leading workshops and seminars across Asia, Africa, Australia, America and Europe. Observing the widespread effects of stress, he developed a holistic yoga toolkit designed to restore balance, cultivate health, and nurture inner peace.
-<p></p>With this vision, Yoganjali was founded in 2002. Since then, we have conducted a wide range of yoga programs, tailored to meet the evolving needs of humanity. This unique synthesis of classical wisdom and modern scientific understanding forms the foundation of a time-tested, practical, and transformative science of Yoga.
-</p>
+ <div className="bg-white py-20">
+  <div className="max-w-5xl mx-auto px-4">
+
+    <h1 className="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">
+      Our Lineage & Vision
+    </h1>
+
+    <div className="flex flex-col md:flex-row gap-8 items-start">
+
+      {/* Left – Text */}
+      <div className="prose prose-lg prose-stone flex-1">
+        <p>
+          Welcome to Yoganjali Global Institute of Applied Yogic Sciences (YGIAYS) – a sanctuary 
+          where Yoga is honored not just as exercise, but as a complete science for the body, mind, 
+          and soul.
+        </p>
+
+        <p>
+          Founded in Bengaluru by <strong>Gopinath Acharya</strong>, Yoganjali embodies the perfect 
+          blend of classical wisdom and modern understanding. Gopinath Acharya devoted six years to 
+          earn his Postgraduate Diploma in Yoga Therapy at Prashanthi Kuteeram, SVYASA, and further 
+          deepened his practice through immersive experiences in the Himalayas and renowned yoga 
+          centers across India in the 1990s. He shared his knowledge globally, leading workshops 
+          and seminars across Asia, Africa, Australia, America and Europe. Observing the widespread 
+          effects of stress, he developed a holistic yoga toolkit designed to restore balance, 
+          cultivate health, and nurture inner peace.
+        </p>
+
+        <p>
+          With this vision, Yoganjali was founded in 2002. Since then, we have conducted a wide 
+          range of yoga programs, tailored to meet the evolving needs of humanity. This unique 
+          synthesis of classical wisdom and modern scientific understanding forms the foundation 
+          of a time-tested, practical, and transformative science of Yoga.
+        </p>
+
         <h3 className="text-2xl font-serif font-bold mt-8 mb-4">Our Mission</h3>
         <ul className="list-disc pl-6 space-y-2">
-           <li>To scientifically validate yogic therapies.</li>
-           <li>To provide accessible, affordable wellness education globally.</li>
-           <li>To integrate Ayurveda and Yoga into mainstream healthcare.</li>
+          <li>To scientifically validate yogic therapies.</li>
+          <li>To provide accessible, affordable wellness education globally.</li>
+          <li>To integrate Ayurveda and Yoga into mainstream healthcare.</li>
         </ul>
       </div>
+
+      {/* Right – Image */}
+      <div className="flex-shrink-0">
+        <img 
+          src="/assets/gopinath.png"
+          alt="Gopinath Acharya"
+          className="w-56 h-56 rounded-full object-cover shadow-lg"
+        />
+      </div>
+
     </div>
   </div>
+</div>
+
 );
 
 const Contact: React.FC = () => (
