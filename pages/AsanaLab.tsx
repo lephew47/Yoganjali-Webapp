@@ -20,6 +20,7 @@ export const AsanaLab: React.FC = () => {
   const [error, setError] = useState('');
   const location = useLocation();
 
+
 const fetchAnalysis = async (name: string) => {
   if (!name.trim()) return;
 
@@ -43,7 +44,7 @@ const fetchAnalysis = async (name: string) => {
 
     console.log('Frontend received:', result);
 
-    // THIS IS THE REAL FIX
+    
     const actualData = result.text ? result.text : result;
     setData(result as AsanaAnalysis);
     
@@ -85,7 +86,7 @@ const fetchAnalysis = async (name: string) => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="e.g., Sirsasana, Yoga Nidra, Tadasana..."
+              placeholder="e.g. Sirsasana, Yoga Nidra"
               className="w-full pl-6 pr-16 py-4 bg-white border border-stone-200 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-lg"
               disabled={loading}
             />

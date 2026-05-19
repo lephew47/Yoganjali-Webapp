@@ -31,6 +31,7 @@ export const Enrollment: React.FC = () => {
     agreeToWaiver: false
   });
 
+
   useEffect(() => {
     const user = authService.getCurrentUser();
     if (user) {

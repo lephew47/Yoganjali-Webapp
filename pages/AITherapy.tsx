@@ -1,16 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, User, Bot, Loader2 } from 'lucide-react';
-import { generateTherapyResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 export const AITherapy: React.FC = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { 
-      role: 'model', 
-      text: 'Namaste. I am your AI Yoga Therapy Assistant. How is your body and mind feeling today? You can tell me about any stress, physical discomfort, or goals you have.',
-      timestamp: Date.now()
-    }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -35,7 +29,18 @@ export const AITherapy: React.FC = () => {
     // Prepare history for context (exclude timestamps for API)
     const history = messages.map(m => ({ role: m.role, text: m.text }));
 
-    const responseText = await generateTherapyResponse(userMsg.text, history);
+
+  const responseText = await fetch('/api/therapy', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    message: userMsg.text,
+    history
+  })
+})
+  .then(res => res.json())
+  .then(data => data.response || "");
+
     
     const modelMsg: ChatMessage = { role: 'model', text: responseText, timestamp: Date.now() };
     setMessages(prev => [...prev, modelMsg]);
@@ -77,7 +82,10 @@ export const AITherapy: React.FC = () => {
                   : 'bg-white text-stone-800 border border-stone-200 rounded-tl-none'
               }`}>
                  {/* Simple markdown formatting support (bold/italic) */}
-                 <div dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
+                 <div dangerouslySetInnerHTML={{ __html: (msg.text || "")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br/>') }} />
+
               </div>
             </div>
           </div>

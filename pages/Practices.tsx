@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PRACTICES } from '../data/content';
 import { Search, Filter, Microscope } from 'lucide-react';

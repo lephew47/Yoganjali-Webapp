@@ -6,6 +6,7 @@ import { BLOG } from '../data/content';
 export const Blog: React.FC = () => {
   const navigate = useNavigate();
 
+
   return (
     <div className="bg-stone-50 py-12 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

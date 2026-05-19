@@ -14,47 +14,54 @@ const getClient = () => {
 /**
  * Generates a therapeutic, holistic response from the AI Yoga Therapy Assistant.
  */
-export const generateTherapyResponse = async (userMessage, history = []) => {
-  if (!API_KEY) {
-    console.error('API Key missing. Available env vars:', Object.keys(process.env));
-    return "Configuration Error: API Key is missing. Please set the GEMINI_API_KEY environment variable.";
-  }
-
+const generateTherapyResponse = async (userMessage, history = []) => {
   try {
+    if (!API_KEY) {
+      throw new Error("GEMINI_API_KEY is missing");
+    }
+
     const client = getClient();
-    const model = client.getGenerativeModel({ 
-      
+
+    const model = client.getGenerativeModel({
       model: "gemini-2.0-flash",
       generationConfig: {
         temperature: 0.7,
-        maxOutputTokens: 1000,
-      },
-      systemInstruction: `You are the 'AI Therapy Assistant' for Yoganjali Global Institute of Applied Yogic Sciences. 
-Your goal is to provide holistic, safe, and scientifically-grounded advice based on Yoga Therapy, Ayurveda, and Mindfulness.
+        maxOutputTokens: 1000
+      }
+    });
+
+    const systemPrompt = `
+You are the AI Therapy Assistant for Yoganjali Global Institute of Applied Yogic Sciences.
 
 Guidelines:
-1. Always be compassionate, professional, and soothing.
-2. Suggest specific Asanas (poses), Pranayama (breathing), and Dhyana (meditation) techniques relevant to the user's query.
-3. If a user mentions severe physical pain or mental distress, strictly advise them to consult a medical professional immediately, while offering gentle supportive practices.
-4. Maintain the institute's philosophy: "Classical Wisdom, Modern Application."
-5. Keep responses concise (under 200 words) unless asked for a detailed routine.`
-    });
+1. Be compassionate, professional, and soothing.
+2. Suggest relevant Asanas, Pranayama, and Dhyana.
+3. If severe physical or mental distress is mentioned, advise consulting a medical professional.
+4. Philosophy: "Classical Wisdom, Modern Application."
+5. Keep responses under 200 words unless asked otherwise.
+`.trim();
 
-    const chat = model.startChat({
-      history: history.map(msg => ({
-        role: msg.role === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.text }]
-      }))
-    });
+    const contents = [
+      { role: "user", parts: [{ text: systemPrompt }] },
 
-    const result = await chat.sendMessage(userMessage);
-    const response = await result.response;
-    return response.text() || "Namaste. I am taking a moment to meditate on your request. Please try again.";
-    
+      ...(Array.isArray(history)
+        ? history
+            .filter(m => m?.text)
+            .map(m => ({
+              role: "user",
+              parts: [{ text: String(m.text) }]
+            }))
+        : []),
+
+      { role: "user", parts: [{ text: String(userMessage) }] }
+    ];
+
+    const result = await model.generateContent({ contents });
+    return result.response.text();
+
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    console.error("Error details:", error.message);
-    return "I apologize, but I am having trouble connecting to the universal consciousness (server error). Please try again later.";
+    console.error("Gemini Therapy Error:", error);
+    return "I apologize. I’m unable to respond at the moment. Please try again shortly.";
   }
 };
 

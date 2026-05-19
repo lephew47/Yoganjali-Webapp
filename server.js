@@ -2,7 +2,21 @@ import express from 'express';
 import 'dotenv/config';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generateAsanaAnalysis, generateTherapyResponse } from './services/geminiService.js';
+import { generateAsanaAnalysis} from './services/geminiService.js';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const API_KEY = process.env.GEMINI_API_KEY || process.env.API_KEY || '';
+
+
+let genAI = null;
+
+const getClient = () => {
+  if (!genAI) {
+    genAI = new GoogleGenerativeAI(API_KEY);
+  }
+  return genAI;
+};
+
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -31,31 +45,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Single analyze route with proper error handling
-app.post('/api/analyze', async (req, res) => {
-  try {
-    console.log('Analyze request body:', req.body);
-    const { name } = req.body;
-    
-    if (!name) {
-      return res.status(400).json({ error: 'Missing name parameter' });
-    }
-
-    const analysis = await generateAsanaAnalysis(name);
-    
-    if (!analysis) {
-      return res.status(500).json({ error: 'Analysis failed' });
-    }
-
-    res.json(analysis);
-  } catch (error) {
-    console.error('Analyze route error:', error);
-    res.status(500).json({ 
-      error: 'Internal server error',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-});
 // server.js
 app.post('/api/analyze', async (req, res) => {
   try {
@@ -90,13 +79,14 @@ app.post('/api/therapy', async (req, res) => {
   try {
     console.log('Therapy request body:', req.body);
     const { message, history = [] } = req.body;
-    
+    const reply = await generateTherapyResponse(message, history);
     if (!message) {
       return res.status(400).json({ error: 'Missing message' });
     }
 
     const response = await generateTherapyResponse(message, history);
-    res.json({ text: response });
+        res.json({ response: reply });
+
   } catch (error) {
     console.error('Therapy route error:', error);
     res.status(500).json({ 
@@ -105,7 +95,63 @@ app.post('/api/therapy', async (req, res) => {
     });
   }
 });
+const generateTherapyResponse = async (userMessage, history = []) => {
+  try {
+    if (!API_KEY) {
+      throw new Error("GEMINI_API_KEY is missing");
+    }
 
+    const client = getClient();
+
+    const model = client.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1000
+      },
+      systemInstruction: `
+You are the AI Therapy Assistant. Always start the conversation with a welcoming greeting:
+"Namaste. I am your AI Yoga Therapy Assistant. How is your body and mind feeling today?"
+
+Guidelines:
+1. Be compassionate, professional, and soothing.
+2. Suggest relevant Asanas, Pranayama, and Dhyana.
+3. If severe physical or mental distress is mentioned, advise consulting a medical professional.
+4. Philosophy: "Classical Wisdom, Modern Application."
+5. Keep responses under 200 words unless asked otherwise.
+      `.trim()
+    });
+
+    // Ensure first message is always 'user'
+    const chatHistory = [];
+
+    // 1️⃣ Add user message first
+    chatHistory.push({
+      role: 'user',
+      parts: [{ text: String(userMessage) }]
+    });
+
+    // 2️⃣ Add previous history after the user message
+    if (Array.isArray(history)) {
+      for (const msg of history) {
+        if (!msg?.text) continue;
+        chatHistory.push({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: String(msg.text) }]
+        });
+      }
+    }
+
+    const chat = model.startChat({ history: chatHistory });
+
+    const result = await chat.sendMessage(userMessage);
+    return result.response.text();
+
+  } catch (error) {
+    console.error("Gemini Therapy Error:", error.message);
+    return "I apologize. I’m unable to respond at the moment. Please try again shortly.";
+  }
+};
 
 app.get('/debug', (req, res) => {
   res.json({

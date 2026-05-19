@@ -27,6 +27,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout, onUpgrade,
   const [passwordData, setPasswordData] = useState({ current: '', new: '', confirm: '' });
   const [passwordStatus, setPasswordStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+ 
+
   // Timer Interval
   useEffect(() => {
     let interval: any = null;

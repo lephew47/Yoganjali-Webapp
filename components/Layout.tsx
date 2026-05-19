@@ -1,40 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, ShoppingBag, Activity, Flower2, BookOpen, Phone, LogIn, Microscope } from 'lucide-react';
+import { Menu, X, User, ShoppingBag, Activity, Flower2, BookOpen, Phone, LogIn, Microscope, Sparkles } from 'lucide-react';
 
-export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: boolean; onLogout: () => void }> = ({ children, isAuthenticated, onLogout }) => {
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Small delay gives time for Recharts and other heavy components to render
+    const timer = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto',        // Use 'auto' for instant, 'smooth' if you prefer
+      });
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+};
+
+export const Layout: React.FC<{ 
+  children: React.ReactNode; 
+  isAuthenticated: boolean; 
+  onLogout: () => void 
+}> = ({ children, isAuthenticated, onLogout }) => {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path ? 'text-amber-600 font-semibold' : 'text-stone-600 hover:text-amber-600';
+  const isActive = (path: string) => 
+    location.pathname === path ? 'text-amber-600 font-semibold' : 'text-stone-600 hover:text-amber-600';
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-50">
-  {/* Navigation */}
-  <nav className="bg-white shadow-sm sticky top-0 z-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between h-20">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            
-            {/* Updated Logo */}
-            <img
-              src={'/assets/logo.png'}
-              alt="Yoganjali Logo"
-              className="h-20 w-20 object-contain"
-            />
-
-            <div className="flex flex-col">
-              <span className="font-serif font-bold text-xl text-stone-800 leading-tight">
-                Yoganjali
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-stone-500">
-                Global Institute
-              </span>
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-20">
+            <div className="flex items-center">
+              <Link to="/" className="flex items-center space-x-2">
+                <img
+                  src="/assets/logo.png"
+                  alt="Yoganjali Logo"
+                  className="h-20 w-20 object-contain"
+                />
+                <div className="flex flex-col">
+                  <span className="font-serif font-bold text-xl text-stone-800 leading-tight">
+                    Yoganjali
+                  </span>
+                  <span className="text-[10px] uppercase tracking-widest text-stone-500">
+                    Global Institute
+                  </span>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
-
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
@@ -45,14 +65,29 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
                 <Microscope size={16} />
                 <span>Science Lab</span>
               </Link>
+
+              {isAuthenticated && (
+                <Link to="/ai-therapy" className={`${isActive('/ai-therapy')} flex items-center space-x-1`}>
+                  <Sparkles size={16} className="text-amber-500" />
+                  <span>AI Therapy</span>
+                </Link>
+              )}
+
               <Link to="/blog" className={isActive('/blog')}>Yogic Events</Link>
+
               {isAuthenticated ? (
-                <Link to="/dashboard" className="flex items-center space-x-1 text-amber-700 bg-amber-50 px-4 py-2 rounded-full hover:bg-amber-100 transition">
+                <Link 
+                  to="/dashboard" 
+                  className="flex items-center space-x-1 text-amber-700 bg-amber-50 px-4 py-2 rounded-full hover:bg-amber-100 transition"
+                >
                   <User size={18} />
                   <span>Dashboard</span>
                 </Link>
               ) : (
-                <Link to="/auth" className="flex items-center space-x-1 text-white bg-stone-800 px-5 py-2 rounded-full hover:bg-stone-700 transition">
+                <Link 
+                  to="/auth" 
+                  className="flex items-center space-x-1 text-white bg-stone-800 px-5 py-2 rounded-full hover:bg-stone-700 transition"
+                >
                   <LogIn size={18} />
                   <span>Login</span>
                 </Link>
@@ -61,7 +96,10 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
 
             {/* Mobile menu button */}
             <div className="md:hidden flex items-center">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-stone-600 hover:text-stone-900">
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                className="text-stone-600 hover:text-stone-900"
+              >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -76,11 +114,23 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
               <Link to="/practices" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Practices Library</Link>
               <Link to="/programs" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Courses & Programs</Link>
               <Link to="/asana-lab" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>Yoga Science Lab</Link>
-              <Link to="/auth" className="block px-3 py-2 rounded-md text-base font-medium text-amber-700 bg-amber-50 mt-2" onClick={() => setIsMenuOpen(false)}>Student Portal</Link>
+              
+              {isAuthenticated && (
+                <Link to="/ai-therapy" className="block px-3 py-2 rounded-md text-base font-medium text-amber-600 hover:bg-stone-50" onClick={() => setIsMenuOpen(false)}>AI Therapy Assistant</Link>
+              )}
+
+              {isAuthenticated ? (
+                <Link to="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-amber-700 bg-amber-50 mt-2" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+              ) : (
+                <Link to="/auth" className="block px-3 py-2 rounded-md text-base font-medium text-white bg-stone-800 mt-2" onClick={() => setIsMenuOpen(false)}>Student Portal</Link>
+              )}
             </div>
           </div>
         )}
       </nav>
+
+      {/* Scroll to Top on Route Change */}
+      <ScrollToTop />
 
       {/* Main Content */}
       <main className="flex-grow">
@@ -91,21 +141,22 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
       <footer className="bg-stone-900 text-stone-400 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            {/* Footer content remains the same */}
             <div>
               <div className="flex items-center space-x-0.5 text-stone-100 mb-4">
-        
-              <img
-              src={'/assets/logo2.png'}
-              alt="Yoganjali Logo"
-              className="h-20 w-20 object-contain"
-              />
-               <div className="flex flex-col"></div>
+                <img
+                  src="/assets/logo2.png"
+                  alt="Yoganjali Logo"
+                  className="h-20 w-20 object-contain"
+                />
                 <span className="font-serif font-bold text-lg">Yoganjali</span>
               </div>
               <p className="text-sm leading-relaxed">
                 Bridging the gap between ancient wisdom and modern science. Join our global community of seekers and healers.
               </p>
             </div>
+
+            {/* Other footer columns remain unchanged... */}
             <div>
               <h3 className="text-stone-100 font-bold uppercase tracking-wider text-sm mb-4">Institute</h3>
               <ul className="space-y-2 text-sm">
@@ -115,6 +166,7 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
                 <li><Link to="/legal" className="hover:text-amber-500 transition">Terms & Privacy</Link></li>
               </ul>
             </div>
+
             <div>
               <h3 className="text-stone-100 font-bold uppercase tracking-wider text-sm mb-4">Practices</h3>
               <ul className="space-y-2 text-sm">
@@ -124,6 +176,7 @@ export const Layout: React.FC<{ children: React.ReactNode; isAuthenticated: bool
                 <li><Link to="/practices" className="hover:text-amber-500 transition">Ayurveda</Link></li>
               </ul>
             </div>
+
             <div>
               <h3 className="text-stone-100 font-bold uppercase tracking-wider text-sm mb-4">Connect</h3>
               <ul className="space-y-2 text-sm">

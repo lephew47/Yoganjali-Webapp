@@ -4,6 +4,7 @@ import { ArrowRight, Heart, Brain, Sun, Sparkles } from 'lucide-react';
 import { TESTIMONIALS } from '../data/content';
 
 export const Home: React.FC = () => {
+
   return (
     <div className="animate-fade-in">
   {/* Hero Section */}
